@@ -1,4 +1,4 @@
-# My GPT — Built from Scratch
+# My GPT
 
 ## Project Structure
 
