@@ -8,9 +8,7 @@ class Solution:
         # z is a 1D NumPy array
         # Formula: 1 / (1 + e^(-z))
         # return np.round(your_answer, 5)"
-        for i in range(len(z)):  
-            z[i] = np.round(1 / (1 + np.exp(-z[i])), 5)
-        return z
+        return np.round(1 /(1 + np.exp(-z)), 5)
             
 
     def relu(self, z: NDArray[np.float64]) -> NDArray[np.float64]:
