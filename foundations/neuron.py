@@ -13,6 +13,14 @@ class Solution:
         # Sigmoid: σ(z) = 1 / (1 + exp(-z))
         # ReLU: max(0, z)
         # return round(your_answer, 5)
+
+        """
+        z = x*w + b
+        a = activation_function(z)
+
+        Think of z as an opinion on the input. It measures how
+        aligned the input vector is with th eweight vector.
+        """
         z = np.dot(x, w) + b
     
         if activation == "sigmoid":
