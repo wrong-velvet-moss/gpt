@@ -21,11 +21,13 @@ class Solution:
 
     A loss function is behind almost every classifier and 
     token predictions in GPT.
+
+    In GPT, the model predicts a distribution over the voacbulary, at each position
+    runs cross entropy which measures how well that distribution matches the actual next token.
     """
 
     def binary_cross_entropy(self, y_true: NDArray[np.float64], y_pred: NDArray[np.float64]) -> float:
         """
-        For two classes, 
         L = -1/n sum_i=1^n [y_i * ln(p_i) + (1 - y_i) * ln(1 - p_i)]
         where y_i is the true label (0 or 1) and p_i is the predicted probability.
         """
@@ -38,16 +40,23 @@ class Solution:
     
         loss_function = (y_true * np.log(y_pred)) + ((1 - y_true) * np.log(1 - y_pred))
         loss = -np.mean(loss_function)
+
         return np.round(loss, 4)
 
 
     def categorical_cross_entropy(self, y_true: NDArray[np.float64], y_pred: NDArray[np.float64]) -> float:
+        """
+        L = -1/n sum_i=1^n sum_c=1^C y_{i,c} * ln(p_i,c)
+        """
+        
         # y_true: one-hot encoded true labels (shape: n_samples x n_classes)
         # y_pred: predicted probabilities (shape: n_samples x n_classes)
         # Hint: add a small epsilon (1e-7) to y_pred to avoid log(0)
         # return round(your_answer, 4)
         epsilon = 1e-7
         y_pred = np.clip(y_pred, epsilon, 1-epsilon)
+
         loss_function = np.sum(y_true * np.log(y_pred), axis=1)
         loss = -np.mean(loss_function)
+    
         return np.round(loss, 4)
