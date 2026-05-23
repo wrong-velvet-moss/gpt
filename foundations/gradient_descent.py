@@ -19,7 +19,6 @@ class Solution:
         x_new = x_old - alpha f'(x_old),
         where a is the learning rate, a small constant
         that controls the step size.
-        
         """
         x = init
         for _ in range(iterations):
