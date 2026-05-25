@@ -1,41 +1,62 @@
-# My GPT
+# gpt
 
-## Project Structure
+A from-scratch GPT, built up one layer at a time. Starts from a single neuron and ends — eventually — at a working transformer.
 
-```
-model/          Attention, Transformer, GPT architecture
-  attention.py             Self-attention head
-  multi_head_attention.py  Multi-headed attention
-  transformer.py           Transformer block
-  gpt.py                   GPT model
-  normalization.py         Layer normalization
-  batch_normalization.py   Batch normalization
-  rms_normalization.py     RMS normalization
-  embeddings.py            Word embeddings
-  positional_encoding.py   Positional encoding
-  kv_cache.py              KV-Cache for fast inference
-  grouped_query_attention.py  Grouped query attention
+This is a learning project, so the code follows the journey rather than jumping straight to the final architecture. Each module is small, readable, and meant to be understood end-to-end.
 
-data/           Data pipeline
-  tokenizer.py                BPE tokenizer
-  vocab.py                    Character-level vocabulary
-  loader.py                   Batched training data loader
-  dataset.py                  GPT dataset preparation
-  nlp_preprocessing.py        NLP preprocessing
-  tokenizer_utils.py          Tokenization edge cases
+## Status
 
-train.py        GPT training loop
-generate.py     Text generation
+| Area | What's there |
+| --- | --- |
+| `foundations/` | Neural-net primitives in NumPy: linear regression, gradient descent, activations, softmax, losses, a single neuron's forward pass, single- and multi-layer backprop. |
+| `model/` | Reserved for attention, transformer blocks, and the GPT itself. Not started. |
+| `data/` | Reserved for the tokenizer and data loader. Not started. |
 
-foundations/    Neural network primitives built from scratch
-  neuron.py, backprop.py, mlp.py, activations.py, loss.py,
-  training_loop.py, dead_relu_detector.py, ...
-```
+Recent work: multi-layer backpropagation (step 3 of 5 in "Build a Neural Net").
 
-## Quick Start
+## Setup
+
+This is a [uv](https://docs.astral.sh/uv/) project. Install uv, then:
 
 ```bash
-pip install -r requirements.txt
-python train.py
-python generate.py
+uv sync
 ```
+
+That creates `.venv/` and installs everything pinned in `uv.lock`. Run anything with `uv run`:
+
+```bash
+uv run python -c "from foundations.neuron import Solution; print(Solution())"
+```
+
+Or activate the venv directly:
+
+```bash
+source .venv/bin/activate
+python -c "from foundations.neuron import Solution; print(Solution())"
+```
+
+## Layout
+
+```
+foundations/                    NumPy-only building blocks
+  linear_regression.py          Forward pass + MSE for a linear model
+  linear_regression_training.py Gradient-descent training loop for the above
+  gradient_descent.py           Plain gradient descent
+  activations.py                ReLU, sigmoid, tanh
+  softmax.py                    Numerically stable softmax
+  loss.py                       MSE, cross-entropy
+  neuron.py                     Single neuron forward pass
+  backprop.py                   Backprop through a single layer
+  multi_layer_backprop.py       Backprop through a stack of layers
+
+model/                          (planned) attention, transformer, GPT
+data/                           (planned) tokenizer, dataset, loader
+```
+
+## Dependencies
+
+- Python ≥ 3.10
+- `numpy` — foundations
+- `torch`, `torchtyping` — for the model layer once it lands
+
+Pinned versions live in `pyproject.toml` and `uv.lock`.
