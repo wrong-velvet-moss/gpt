@@ -13,8 +13,15 @@ class Solution:
         Layer Normalisation recenteres each layers output so the values stay in a range.
         It normalises each input independently across its features.
 
-        For a feature vector x:
+        Layer norma normalises across the feature dimension, each sample statistics come from its
+        own features. whereas batch dimension, each features statistics come from the batch.
 
+        Layer norm becomes independent of batch size. 
+
+        We can apply an affline transformation with learned parameters gamma (scale) and beta (shift)
+        out_i = gamma * x_hat + beta .
+
+        The network might need activations with a non zero mean or non zero variance.
         """
         # x: 1D feature vector
         # gamma: 1D scale parameter (same length as x)
