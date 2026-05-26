@@ -7,7 +7,17 @@ class Solution:
         # Implement RMS Normalization (similar to LayerNorm but without mean centering or beta)
         # Normalize x, then scale by gamma
         # Return result rounded to 4 decimal places as a list
-        
+        """
+        Llama and Mistral use RMS normalisation, where it drops the mean subtraction entirely.
+
+        It drops the mean subtraction (mean centering) and the beta shift parameters.
+
+        Where we divide each input by the rms and scale by gamma.
+
+        The insight form the paper, in layernorm was not normalised by mean subtraction.
+        Rescaling by a mag measure.
+        """
+
         rms = np.sqrt(np.mean(np.pow(x, 2)) + eps)
         x_hat = x / rms
         output = gamma * x_hat
