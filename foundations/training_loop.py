@@ -19,7 +19,9 @@ class Solution:
         # Initialize w = zeros, b = 0
         # return (np.round(w, 5), round(b, 5))
 
+        # number of samples
         n = X.shape[0]
+        # number of features 
         w = np.zeros(X.shape[1])
         b = 0.0
 
